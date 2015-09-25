@@ -102,6 +102,9 @@ namespace Tiled2Unity
                 // Also, no shadows
                 mr.receiveShadows = false;
                 ImportUtils.SetCastShadows(mr, false);
+
+                mr.useLightProbes = false;
+                mr.reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Off;
             }
         }
 

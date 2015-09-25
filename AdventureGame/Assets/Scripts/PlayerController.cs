@@ -25,27 +25,25 @@ public class PlayerController : MonoBehaviour {
 
 		anim.SetBool ("isAttacking", false);
 
-		face_Y = Camera.main.ScreenToWorldPoint (Input.mousePosition).y - transform.position.y;
-		face_X = Camera.main.ScreenToWorldPoint (Input.mousePosition).x - transform.position.x;
-
-
 		Vector2 movementVector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 
 		if (movementVector != Vector2.zero) {
+			face_Y = Input.GetAxisRaw("Vertical");
+			face_X = Input.GetAxisRaw ("Horizontal");
 			anim.SetBool ("isWalking", true);
-			anim.SetFloat("input_x", face_X);
-			anim.SetFloat("input_y", face_Y);
+			anim.SetFloat("X", face_X);
+			anim.SetFloat("Y", face_Y);
 		} else {
 			anim.SetBool("isWalking", false);
-			anim.SetFloat("input_x", face_X);
-			anim.SetFloat("input_y", face_Y);
+			anim.SetFloat("X", face_X);
+			anim.SetFloat("Y", face_Y);
 		}
 
 		rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * moveSpeed);
 
-		if (Input.GetKeyDown (KeyCode.Mouse0)) {
-			anim.SetFloat("input_x", face_X);
-			anim.SetFloat("input_y", face_Y);
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			anim.SetFloat("X", face_X);
+			anim.SetFloat("Y", face_Y);
 			anim.SetBool ("isAttacking", true);
 		}
 
