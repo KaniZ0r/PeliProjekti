@@ -31,5 +31,6 @@ public class ScreenFader : MonoBehaviour {
 
 	void AnimationComplete(){
 		isFading = false;
+		FindObjectOfType<PlayerController> ().UnFreeze ();
 	}
 }

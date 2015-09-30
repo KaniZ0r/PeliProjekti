@@ -4,43 +4,26 @@ using System.Collections;
 public class npc_script : MonoBehaviour {
 
 	public GUIStyle customGuiStyle;
-	public Texture2D oldmanHead;
-	bool showGui;
+	public Sprite oldmanHead;
+	string text;
+	string name1;
 
-	// Use this for initialization
-	void Start () {
-		showGui = false;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	public GameObject textbox;
+
+	Vector3 screenpos;
 
 	void OnTriggerStay2D(Collider2D Other){
 		if (Other.tag == "Player") {
-			if (Input.GetKeyDown(KeyCode.Space)) {
-				showGui = true;
-
-			}
+			textbox.SetActive(true);
+			text = "Haluan vain kertoa, että Alppu2 on vitun homoneekerin mätäpaska!!½";
+			FindObjectOfType<TextScript>().SetText(text);
+			FindObjectOfType<ImageScript>().SetImage(oldmanHead);
 		}
 
 	}
 	void OnTriggerExit2D(Collider2D Other){
 		if (Other.tag == "Player") {
-
-				showGui = false;
-				
-
+			textbox.SetActive(false);
 		}
 	}
-	void OnGUI(){
-		if (showGui == true) {
-			
-
-			GUI.Box (new Rect ( Screen.width - 1200,Screen.height -200  , Screen.width / 2, Screen.height / 3), "rekt message!", customGuiStyle);
-			GUI.Box (new Rect (Screen.width - 1200,Screen.height -200  , Screen.width / 2, Screen.height / 3),oldmanHead);
-		}
-	}
-
 }
