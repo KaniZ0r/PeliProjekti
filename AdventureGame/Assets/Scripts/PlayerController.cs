@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
 
 		anim.SetBool ("isAttacking", false);
 
-			Vector2 movementVector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
+		Vector2 movementVector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 
 
 		if (!stopper) {
@@ -52,7 +52,6 @@ public class PlayerController : MonoBehaviour {
 				anim.SetBool ("isAttacking", true);
 			}
 		}
-
 	}
 
 	public void AddXP () {
