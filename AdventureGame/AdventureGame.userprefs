@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\PlayerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\npc_script.cs">
     <Files>
-      <File FileName="Assets\Scripts\TextScript.cs" Line="15" Column="19" />
-      <File FileName="Assets\Scripts\Warp.cs" Line="17" Column="51" />
-      <File FileName="Assets\Scripts\ScreenFader.cs" Line="33" Column="20" />
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="52" Column="40" />
-      <File FileName="Assets\Scripts\npc_script.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\npc_script.cs" Line="34" Column="19" />
+      <File FileName="Assets\Scripts\TextScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Warp.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ScreenFader.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CameraController.cs" Line="1" Column="1" />
+      <File FileName="Assets\test.txt" Line="6" Column="24" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
