@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
 	public Animator anim;
 	public Rigidbody2D rb2d;
 	public float moveSpeed;
+	public Slider HPslider;
 
 	public int currentXp;
 
@@ -18,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		HPslider = GetComponent<Slider> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
 		stopper = false;
