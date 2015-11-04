@@ -7,23 +7,31 @@ public class PlayerController : MonoBehaviour {
 	public Animator anim;
 	public Rigidbody2D rb2d;
 	public float moveSpeed;
-	public Slider HPslider;
+	public int currentHP;
+	public int maxHP;
 
 	public int currentXp;
 
 	float face_Y;
 	float face_X;
 
+	float xK;
+	float yK;
+
 	bool stopper;
 
-	public Transform sword;
+	public float knockdur;
+	float timer;
+	bool knock;
+	public int knockSpeed;
 
 	// Use this for initialization
 	void Start () {
-		HPslider = GetComponent<Slider> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
 		stopper = false;
+		currentHP = maxHP;
+		knock = false;
 	}
 	
 	// Update is called once per frame
@@ -33,6 +41,9 @@ public class PlayerController : MonoBehaviour {
 
 		Vector2 movementVector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 
+		if (currentHP == 0) {
+			Destroy(gameObject);
+		}
 
 		if (!stopper) {
 			if (movementVector != Vector2.zero) {
@@ -46,8 +57,18 @@ public class PlayerController : MonoBehaviour {
 				anim.SetFloat("X", face_X);
 				anim.SetFloat("Y", face_Y);
 			}
-
-			rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * moveSpeed);
+			if (!knock) {
+				rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * moveSpeed);
+			} else {
+				if (knockdur > timer) {
+					Vector2 movementVector2 = new Vector2 ((transform.position.x - xK),(transform.position.y - yK));
+					rb2d.MovePosition (rb2d.position + movementVector2 * Time.deltaTime * knockSpeed);
+					timer += Time.deltaTime;
+				} else {
+					timer = 0;
+					knock = false;
+				}
+			}
 
 			if (Input.GetKeyDown (KeyCode.Space)) {
 				anim.SetFloat("X", face_X);
@@ -68,5 +89,15 @@ public class PlayerController : MonoBehaviour {
 
 	public void UnFreeze () {
 		stopper = false;
+	}
+
+	public void takeDamage () {
+		currentHP--;
+	}
+
+	public void knockBack (float x, float y) {
+		knock = true;
+		xK = x;
+		yK = y;
 	}
 }

@@ -24,40 +24,45 @@ public class Enemy : MonoBehaviour {
 
 	void Update () {
 
-		x = target.transform.position.x - transform.position.x;
-		y = target.transform.position.y - transform.position.y;
+		if (enemyHealth == 0) {
+			Destroy(gameObject);
+		}
 
-		anim.SetFloat ("X", x);
-		anim.SetFloat ("Y", y);
+		if (target) {
 
-		if (!knock) {
-			transform.position += (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
-		} else {
-			if (knockdur > timer) {
-				transform.position -= (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime * 8;
-				timer += Time.deltaTime;
+			x = target.transform.position.x - transform.position.x;
+			y = target.transform.position.y - transform.position.y;
+
+			anim.SetFloat ("X", x);
+			anim.SetFloat ("Y", y);
+
+			if (!knock) {
+				transform.position += (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
 			} else {
-				timer = 0;
-				knock = false;
+				if (knockdur > timer) {
+					transform.position -= (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime * 8;
+					timer += Time.deltaTime;
+				} else {
+					timer = 0;
+					knock = false;
+				}
 			}
+		} else {
+			target = null;
 		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player") {
-				//Destroy(other.gameObject);
-			Debug.Log("osuma!");
-		}
-		if (other.tag == "Weapon") {
-			//	knockbackin suunta
+			FindObjectOfType<PlayerController>().takeDamage();
+			FindObjectOfType<PlayerController>().knockBack(transform.position.x, transform.position.y);
 			knock = true;
+		}
 
-			/*if (enemyHealth < 1) {
-				Destroy (gameObject);
-			}
-			else {
-				enemyHealth--;
-			}*/
+		if (other.tag == "Weapon") {
+			knock = true;
+			FindObjectOfType<PlayerController>().knockBack(transform.position.x, transform.position.y);
+			enemyHealth--;
 		}
 	}
 }
