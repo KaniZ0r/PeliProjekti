@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 98bb21e056744aa4fbd3a7e9a795b94a
-timeCreated: 1446644246
+timeCreated: 1446731244
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -239,7 +239,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 192
-        y: 1474
+        y: 1472
         width: 64
         height: 64
       alignment: 0
@@ -279,7 +279,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 448
-        y: 1470
+        y: 1472
         width: 64
         height: 64
       alignment: 0
@@ -368,7 +368,7 @@ TextureImporter:
     - name: Walk_D7
       rect:
         serializedVersion: 2
-        x: 446
+        x: 448
         y: 1408
         width: 64
         height: 64
@@ -498,7 +498,7 @@ TextureImporter:
     - name: Death3
       rect:
         serializedVersion: 2
-        x: 128
+        x: 130
         y: 768
         width: 64
         height: 64
