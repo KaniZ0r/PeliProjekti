@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 
-	Transform target;
+	public Transform target;
 	Animator anim;
 	public float moveSpeed;
 	public int enemyHealth;
@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour {
 				if (knockdur > timer) {
 					transform.position -= (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime * 8;
 					timer += Time.deltaTime;
+					anim.SetTrigger("hurt");
 				} else {
 					timer = 0;
 					knock = false;

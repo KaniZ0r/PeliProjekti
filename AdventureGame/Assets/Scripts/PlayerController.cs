@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
-	public Animator anim;
-	public Rigidbody2D rb2d;
+	Animator anim;
+	Rigidbody2D rb2d;
 	public float moveSpeed;
 	public int currentHP;
 	public int maxHP;
@@ -41,8 +41,11 @@ public class PlayerController : MonoBehaviour {
 
 		Vector2 movementVector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 
-		if (currentHP == 0) {
-			Destroy(gameObject);
+		if (currentHP <= 0) {
+			FindObjectOfType<Enemy>().target = null;
+			Freeze();
+			anim.SetBool("die", true);
+			Destroy(gameObject, 2);
 		}
 
 		if (!stopper) {
