@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour {
 	bool knock;
 	public int knockSpeed;
 
+	bool dash;
+	public int dashSpeed;
+
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour {
 		stopper = false;
 		currentHP = maxHP;
 		knock = false;
+		dash = false;
 	}
 	
 	// Update is called once per frame
@@ -60,8 +64,16 @@ public class PlayerController : MonoBehaviour {
 				anim.SetFloat("X", face_X);
 				anim.SetFloat("Y", face_Y);
 			}
+			if (Input.GetKey(KeyCode.LeftShift)) {
+				dash = true;
+			}
+
 			if (!knock) {
+				if (dash) {
+					moveSpeed = moveSpeed * dashSpeed;
+				}
 				rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * moveSpeed);
+				dash = false;
 			} else {
 				if (knockdur > timer) {
 					Vector2 movementVector2 = new Vector2 ((transform.position.x - xK),(transform.position.y - yK));

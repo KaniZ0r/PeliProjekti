@@ -7,10 +7,12 @@ public class Enemy : MonoBehaviour {
 	Animator anim;
 	public float moveSpeed;
 	public int enemyHealth;
+	float dist;
 	
 	public float knockdur;
 	float timer;
 	bool knock;
+	bool seen;
 
 	float x;
 	float y;
@@ -18,7 +20,7 @@ public class Enemy : MonoBehaviour {
 	void Start () {
 		target = GameObject.FindWithTag ("Player").transform;
 		anim = GetComponent<Animator> ();
-
+		seen = false;
 		knock = false;
 	}
 
@@ -29,23 +31,28 @@ public class Enemy : MonoBehaviour {
 		}
 
 		if (target) {
-
+			dist = Vector3.Distance(transform.position, target.transform.position);
 			x = target.transform.position.x - transform.position.x;
 			y = target.transform.position.y - transform.position.y;
 
 			anim.SetFloat ("X", x);
 			anim.SetFloat ("Y", y);
 
-			if (!knock) {
-				transform.position += (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
-			} else {
-				if (knockdur > timer) {
-					transform.position -= (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime * 8;
-					timer += Time.deltaTime;
-					anim.SetTrigger("hurt");
+			if (dist < 1.5) {
+				seen = true;
+			}
+			if (seen) {
+				if (!knock) {
+					transform.position += (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
 				} else {
-					timer = 0;
-					knock = false;
+					if (knockdur > timer) {
+						transform.position -= (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime * 8;
+						timer += Time.deltaTime;
+						anim.SetTrigger("hurt");
+					} else {
+						timer = 0;
+						knock = false;
+					}
 				}
 			}
 		} else {
@@ -57,12 +64,10 @@ public class Enemy : MonoBehaviour {
 		if (other.tag == "Player") {
 			FindObjectOfType<PlayerController>().takeDamage();
 			FindObjectOfType<PlayerController>().knockBack(transform.position.x, transform.position.y);
-			knock = true;
 		}
 
 		if (other.tag == "Weapon") {
 			knock = true;
-			FindObjectOfType<PlayerController>().knockBack(transform.position.x, transform.position.y);
 			enemyHealth--;
 		}
 	}
