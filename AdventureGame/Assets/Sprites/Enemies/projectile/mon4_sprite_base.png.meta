@@ -1,0 +1,189 @@
+fileFormatVersion: 2
+guid: 46a1c112c086d6743a32ab506b667fe2
+timeCreated: 1448008172
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: mon4_sprite_base_0
+    21300002: mon4_sprite_base_1
+    21300004: mon4_sprite_base_2
+    21300006: mon4_sprite_base_3
+    21300008: mon4_sprite_base_27
+    21300010: mon4_sprite_base_26
+    21300012: mon4_sprite_base_25
+    21300014: mon4_sprite_base_7
+    21300016: mon4_sprite_base_8
+    21300018: mon4_sprite_base_9
+    21300020: mon4_sprite_base_10
+    21300022: mon4_sprite_base_11
+    21300024: mon4_sprite_base_12
+    21300026: mon4_sprite_base_13
+    21300028: mon4_sprite_base_14
+    21300030: mon4_sprite_base_15
+    21300032: mon4_sprite_base_24
+    21300034: mon4_sprite_base_23
+    21300036: mon4_sprite_base_22
+    21300038: mon4_sprite_base_21
+    21300040: mon4_sprite_base_20
+    21300042: mon4_sprite_base_21
+    21300044: mon4_sprite_base_22
+    21300046: mon4_sprite_base_23
+    21300048: mon4_sprite_base_24
+    21300050: mon4_sprite_base_25
+    21300052: mon4_sprite_base_26
+    21300054: mon4_sprite_base_27
+    21300056: mon4_sprite_base_28
+    21300058: mon4_sprite_base_29
+    21300060: mon4_sprite_base_30
+    21300062: mon4_sprite_base_31
+    21300064: mon4_sprite_base_32
+    21300066: mon4_sprite_base_33
+    21300068: mon4_sprite_base_34
+    21300070: mon4_sprite_base_35
+    21300072: mon4_sprite_base_36
+    21300074: mon4_sprite_base_37
+    21300076: mon4_sprite_base_38
+    21300078: mon4_sprite_base_39
+    21300080: mon4_sprite_base_40
+    21300082: mon4_sprite_base_41
+    21300084: mon4_sprite_base_28
+    21300086: mon4_sprite_base_29
+    21300088: mon4_sprite_base_30
+    21300090: mon4_sprite_base_31
+    21300092: mon4_sprite_base_32
+    21300094: mon4_sprite_base_33
+    21300096: mon4_sprite_base_48
+    21300098: mon4_sprite_base_49
+    21300100: mon4_sprite_base_50
+    21300102: mon4_sprite_base_51
+    21300104: mon4_sprite_base_52
+    21300106: mon4_sprite_base_53
+    21300108: mon4_sprite_base_54
+    21300110: mon4_sprite_base_55
+    21300112: mon4_sprite_base_56
+    21300114: mon4_sprite_base_57
+    21300116: mon4_sprite_base_58
+    21300118: mon4_sprite_base_59
+    21300120: mon4_sprite_base_60
+    21300122: mon4_sprite_base_61
+    21300124: mon4_sprite_base_62
+    21300126: mon4_sprite_base_63
+    21300128: mon4_sprite_base_64
+    21300130: mon4_sprite_base_65
+    21300132: mon4_sprite_base_66
+    21300134: mon4_sprite_base_67
+    21300136: mon4_sprite_base_207
+    21300138: mon4_sprite_base_208
+    21300140: mon4_sprite_base_209
+    21300142: mon4_sprite_base_210
+    21300144: mon4_sprite_base_211
+    21300146: mon4_sprite_base_212
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 32
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: mon4_sprite_base_207
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: mon4_sprite_base_208
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: mon4_sprite_base_209
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: mon4_sprite_base_210
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: mon4_sprite_base_211
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: mon4_sprite_base_212
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
