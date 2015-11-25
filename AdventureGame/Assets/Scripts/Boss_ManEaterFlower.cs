@@ -9,13 +9,14 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 	float x;
 	float y;
 	public int health;
+	bool start;
 	
 		
 
 	void Start () {
 		anim = GetComponent<Animator> ();
 		target = GameObject.FindWithTag ("Player").transform;
-		StartCoroutine(shootProjectile(3f));
+		start = false;
 	}
 	
 	// Update is called once per frame
@@ -29,6 +30,11 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 		if (health <= 0) {
 			Destroy(gameObject);
 		}
+
+		if (start) {
+			StartCoroutine (shootProjectile (3f));
+			start = false;
+		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
@@ -36,6 +42,10 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 			FindObjectOfType<PlayerController>().knockBack(transform.position.x, transform.position.y);
 			health--;
 		}
+	}
+
+	public void setStart (){
+		start = true;
 	}
 
 	IEnumerator shootProjectile (float seconds){
