@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour {
 	bool knock;
 	public int knockSpeed;
 
-	bool dash;
+	public bool dash;
 	public int dashSpeed;
 
 	// Use this for initialization
@@ -64,16 +64,22 @@ public class PlayerController : MonoBehaviour {
 				anim.SetFloat("X", face_X);
 				anim.SetFloat("Y", face_Y);
 			}
-			if (Input.GetKey(KeyCode.LeftShift)) {
+			if (Input.GetKeyDown (KeyCode.Q)) {
 				dash = true;
 			}
 
 			if (!knock) {
 				if (dash) {
-					moveSpeed = moveSpeed * dashSpeed;
+					if (knockdur > timer) {
+						rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * dashSpeed);
+						timer += Time.deltaTime;
+					} else {
+						timer = 0;
+						dash = false;
+					}
+				} else {
+					rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * moveSpeed);
 				}
-				rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * moveSpeed);
-				dash = false;
 			} else {
 				if (knockdur > timer) {
 					Vector2 movementVector2 = new Vector2 ((transform.position.x - xK),(transform.position.y - yK));

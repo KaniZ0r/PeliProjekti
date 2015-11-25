@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\MenuScript.cs" />
+     <Compile Include="Assets\Scripts\BossManager.cs" />
      <Compile Include="Assets\Scripts\Boss_ManEaterFlower.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\CanvasController.cs" />
