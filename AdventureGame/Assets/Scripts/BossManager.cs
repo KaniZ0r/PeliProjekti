@@ -10,6 +10,7 @@ public class BossManager : MonoBehaviour {
 	public GameObject hp;
 	public Scrollbar hpBar;
 	public GameObject bossTitle;
+	Camera camera;
 	float health;
 	float fullHealth;
 	bool battle;
@@ -20,6 +21,7 @@ public class BossManager : MonoBehaviour {
 	void Update () {
 		if (battle) {
 			health = FindObjectOfType<Boss_ManEaterFlower> ().health;
+			camera = FindObjectOfType<Camera>();
 			hpBar.size = health / fullHealth;
 		}
 	}
@@ -33,6 +35,7 @@ public class BossManager : MonoBehaviour {
 			boss.SetActive(true);
 			other.gameObject.transform.position = warpTarget.position;
 			FindObjectOfType<CameraController>().target = GameObject.FindWithTag ("Boss").transform;
+			Camera.main.orthographicSize = 2.5f;
 			hp.SetActive(true);
 			yield return StartCoroutine (sf.FadeToClear ());
 			bossTitle.SetActive(false);
