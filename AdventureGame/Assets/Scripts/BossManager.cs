@@ -23,6 +23,9 @@ public class BossManager : MonoBehaviour {
 			health = FindObjectOfType<Boss_ManEaterFlower> ().health;
 			camera = FindObjectOfType<Camera>();
 			hpBar.size = health / fullHealth;
+			if (health == 0){
+				StartCoroutine(endBattle());
+			}
 		}
 	}
 
@@ -38,11 +41,19 @@ public class BossManager : MonoBehaviour {
 			Camera.main.orthographicSize = 2.5f;
 			hp.SetActive(true);
 			yield return StartCoroutine (sf.FadeToClear ());
+			fullHealth = FindObjectOfType<Boss_ManEaterFlower> ().health;
 			bossTitle.SetActive(false);
 			borders.SetActive(true);
 			battle = true;
 			FindObjectOfType<Boss_ManEaterFlower>().setStart();
 		}
+	}
+
+	IEnumerator endBattle () {
+		FindObjectOfType<CameraController> ().target = GameObject.FindWithTag ("Player").transform;
+		hp.SetActive (false);
+		Destroy (gameObject);
+		yield return new WaitForFixedUpdate();
 	}
 
 }
