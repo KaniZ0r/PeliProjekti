@@ -4,7 +4,7 @@ using System.Collections;
 public class MenuScript : MonoBehaviour {
 
 	public void StartLevel(){
-		Application.LoadLevel ("DevZone 1");
+		Application.LoadLevel ("Level1");
 	}
 
 	public void Exit() {

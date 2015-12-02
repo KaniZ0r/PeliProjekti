@@ -10,7 +10,6 @@ public class BossManager : MonoBehaviour {
 	public GameObject hp;
 	public Scrollbar hpBar;
 	public GameObject bossTitle;
-	Camera camera;
 	float health;
 	float fullHealth;
 	bool battle;
@@ -21,7 +20,6 @@ public class BossManager : MonoBehaviour {
 	void Update () {
 		if (battle) {
 			health = FindObjectOfType<Boss_ManEaterFlower> ().health;
-			camera = FindObjectOfType<Camera>();
 			hpBar.size = health / fullHealth;
 			if (health == 0){
 				StartCoroutine(endBattle());
@@ -41,11 +39,11 @@ public class BossManager : MonoBehaviour {
 			Camera.main.orthographicSize = 2.5f;
 			hp.SetActive(true);
 			yield return StartCoroutine (sf.FadeToClear ());
+			FindObjectOfType<Boss_ManEaterFlower>().setStart();
 			fullHealth = FindObjectOfType<Boss_ManEaterFlower> ().health;
 			bossTitle.SetActive(false);
 			borders.SetActive(true);
 			battle = true;
-			FindObjectOfType<Boss_ManEaterFlower>().setStart();
 		}
 	}
 
@@ -53,6 +51,7 @@ public class BossManager : MonoBehaviour {
 		FindObjectOfType<CameraController> ().target = GameObject.FindWithTag ("Player").transform;
 		hp.SetActive (false);
 		Destroy (gameObject);
+		Camera.main.orthographicSize = 2f;
 		yield return new WaitForFixedUpdate();
 	}
 

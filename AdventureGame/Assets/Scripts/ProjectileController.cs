@@ -6,7 +6,7 @@ public class ProjectileController : MonoBehaviour {
 	public float speed;
 	Rigidbody2D rb2d;
 	Animator anim;
-	Vector3 suunta;
+	public Vector3 suunta;
 	public Transform target;
 
 	float kulmakerroin;
@@ -18,12 +18,11 @@ public class ProjectileController : MonoBehaviour {
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
 		target = GameObject.FindWithTag ("Player").transform;
-		suunta = (transform.position - target.transform.position).normalized;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		rb2d.velocity = -suunta * speed;
+			rb2d.velocity = -suunta * speed;
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {

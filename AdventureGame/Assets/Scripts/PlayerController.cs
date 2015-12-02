@@ -10,7 +10,11 @@ public class PlayerController : MonoBehaviour {
 	public int currentHP;
 	public int maxHP;
 
+	public GameObject DashIndicator;
+
 	public int currentXp;
+	public bool immune;
+	float immuneDur;
 
 	float face_Y;
 	float face_X;
@@ -27,6 +31,9 @@ public class PlayerController : MonoBehaviour {
 
 	public bool dash;
 	public int dashSpeed;
+	float dashTimer;
+	Vector2 movementVector;
+	bool takeD;
 
 	// Use this for initialization
 	void Start () {
@@ -36,22 +43,34 @@ public class PlayerController : MonoBehaviour {
 		currentHP = maxHP;
 		knock = false;
 		dash = false;
+		dashTimer = 2;
+		takeD = false;
+		immune = false;
+		immuneDur = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		anim.SetBool ("isAttacking", false);
+		movementVector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 
-		Vector2 movementVector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
+		if (immune) {
+			if (immuneDur < 1) {
+				immuneDur += Time.deltaTime;
+			} else {
+				immune = false;
+			}
+		} else {
+			immuneDur = 0;
+		}
 
 		if (currentHP <= 0) {
 			FindObjectOfType<Enemy>().target = null;
 			Freeze();
 			anim.SetBool("die", true);
-			Destroy(gameObject, 2);
+			Destroy(gameObject, 0);
 		}
-
 		if (!stopper) {
 			if (movementVector != Vector2.zero) {
 				face_Y = Input.GetAxisRaw("Vertical");
@@ -64,8 +83,15 @@ public class PlayerController : MonoBehaviour {
 				anim.SetFloat("X", face_X);
 				anim.SetFloat("Y", face_Y);
 			}
-			if (Input.GetKeyDown (KeyCode.Q)) {
-				dash = true;
+			if (dashTimer < 1) {
+				DashIndicator.SetActive(false);
+				dashTimer += Time.deltaTime;
+			}
+			if (dashTimer >= 1){
+				DashIndicator.SetActive(true);
+				if (Input.GetKeyDown (KeyCode.Q)) {
+					dash = true;
+				}
 			}
 
 			if (!knock) {
@@ -73,8 +99,10 @@ public class PlayerController : MonoBehaviour {
 					if (knockdur > timer) {
 						rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * dashSpeed);
 						timer += Time.deltaTime;
+
 					} else {
 						timer = 0;
+						dashTimer = 0;
 						dash = false;
 					}
 				} else {
@@ -85,9 +113,17 @@ public class PlayerController : MonoBehaviour {
 					Vector2 movementVector2 = new Vector2 ((transform.position.x - xK),(transform.position.y - yK));
 					rb2d.MovePosition (rb2d.position + movementVector2 * Time.deltaTime * knockSpeed);
 					timer += Time.deltaTime;
+					if (takeD){
+						anim.SetBool ("hurt", true);
+						immune = true;
+					}
 				} else {
 					timer = 0;
 					knock = false;
+					if (takeD) {
+						anim.SetBool ("hurt", false);
+						takeD = false;
+					}
 				}
 			}
 
@@ -113,12 +149,17 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void takeDamage () {
-		currentHP--;
+		if (!immune) {
+			takeD = true;
+			currentHP--;
+		}
 	}
 
 	public void knockBack (float x, float y) {
-		knock = true;
-		xK = x;
-		yK = y;
+		if (!immune) {
+			knock = true;
+			xK = x;
+			yK = y;
+		}
 	}
 }
