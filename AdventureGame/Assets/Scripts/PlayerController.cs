@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour {
 	public float moveSpeed;
 	public int currentHP;
 	public int maxHP;
+	AudioSource dashSound;
+	AudioSource hurt;
+	AudioSource sword;
 
 	public GameObject DashIndicator;
 
@@ -47,6 +50,10 @@ public class PlayerController : MonoBehaviour {
 		takeD = false;
 		immune = false;
 		immuneDur = 0;
+		var sources = GetComponents<AudioSource> ();
+		dashSound = sources [0];
+		hurt = sources [1];
+		sword = sources [2];
 	}
 	
 	// Update is called once per frame
@@ -96,6 +103,7 @@ public class PlayerController : MonoBehaviour {
 
 			if (!knock) {
 				if (dash) {
+					dashSound.Play();
 					if (knockdur > timer) {
 						rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * dashSpeed);
 						timer += Time.deltaTime;
@@ -114,6 +122,7 @@ public class PlayerController : MonoBehaviour {
 					rb2d.MovePosition (rb2d.position + movementVector2 * Time.deltaTime * knockSpeed);
 					timer += Time.deltaTime;
 					if (takeD){
+						hurt.Play();
 						anim.SetBool ("hurt", true);
 						immune = true;
 					}
@@ -131,6 +140,7 @@ public class PlayerController : MonoBehaviour {
 				anim.SetFloat("X", face_X);
 				anim.SetFloat("Y", face_Y);
 				anim.SetBool ("isAttacking", true);
+				sword.Play ();
 			}
 		}
 	}

@@ -11,13 +11,17 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 	public int health;
 	int fullHealth;
 	bool start;
-		
+	AudioSource attack;
+	AudioSource hurt;
 
 	void Start () {
 		anim = GetComponent<Animator> ();
 		target = GameObject.FindWithTag ("Player").transform;
 		start = false;
 		fullHealth = health;
+		var sources = GetComponents<AudioSource> ();
+		attack = sources [0];
+		hurt = sources [1];
 	}
 	
 	// Update is called once per frame
@@ -42,6 +46,7 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 		if (other.tag == "Weapon") {
 			FindObjectOfType<PlayerController>().knockBack(transform.position.x, transform.position.y);
 			health--;
+			hurt.Play();
 		}
 	}
 
@@ -55,12 +60,15 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 				yield return new WaitForSeconds (1.5f);
 				GameObject p1 = (GameObject)Instantiate (projectile, this.transform.position, target.transform.rotation);
 				p1.GetComponent<ProjectileController>().suunta = (transform.position - target.transform.position).normalized;
+				attack.Play();
 				yield return new WaitForSeconds (0.5f);
 				GameObject p2 = (GameObject)Instantiate (projectile, this.transform.position, target.transform.rotation);
 				p2.GetComponent<ProjectileController>().suunta = (transform.position - target.transform.position).normalized;
+				attack.Play();
 				yield return new WaitForSeconds (0.5f);
 				GameObject p3 = (GameObject) Instantiate (projectile, this.transform.position, target.transform.rotation);
 				p3.GetComponent<ProjectileController>().suunta = (transform.position - target.transform.position).normalized;
+				attack.Play();
 			} else {
 				yield return new WaitForSeconds(2.0f);
 				GameObject p1 = (GameObject)Instantiate(projectile, this.transform.position, target.transform.rotation);
@@ -71,6 +79,7 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 				p2.GetComponent<ProjectileController>().suunta = new Vector3(0, -1, 0);
 				p3.GetComponent<ProjectileController>().suunta = new Vector3(1, 0, 0);
 				p4.GetComponent<ProjectileController>().suunta = new Vector3(-1, 0, 0);
+				attack.Play();
 				yield return new WaitForSeconds(0.5f);
 				GameObject p5 = (GameObject)Instantiate(projectile, this.transform.position, target.transform.rotation);
 				GameObject p6 = (GameObject)Instantiate(projectile, this.transform.position, target.transform.rotation);
@@ -80,6 +89,7 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 				p6.GetComponent<ProjectileController>().suunta = new Vector3(1, -1, 0);
 				p7.GetComponent<ProjectileController>().suunta = new Vector3(-1, 1, 0);
 				p8.GetComponent<ProjectileController>().suunta = new Vector3(-1, -1, 0);
+				attack.Play();
 				yield return new WaitForSeconds(0.5f);
 				GameObject p9 = (GameObject)Instantiate(projectile, this.transform.position, target.transform.rotation);
 				GameObject p10 = (GameObject)Instantiate(projectile, this.transform.position, target.transform.rotation);
@@ -97,6 +107,7 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 				p14.GetComponent<ProjectileController>().suunta = new Vector3(1, -1, 0);
 				p15.GetComponent<ProjectileController>().suunta = new Vector3(-1, 1, 0);
 				p16.GetComponent<ProjectileController>().suunta = new Vector3(-1, -1, 0);
+				attack.Play();
 			}
 		}
 	}
