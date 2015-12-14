@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour {
 			FindObjectOfType<Enemy>().target = null;
 			Freeze();
 			anim.SetBool("die", true);
-			Destroy(gameObject, 0);
+			gameObject.SetActive(false);
 		}
 		if (!stopper) {
 			if (movementVector != Vector2.zero) {

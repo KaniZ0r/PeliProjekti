@@ -33,6 +33,7 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 		anim.SetFloat ("Y", y);		
 
 		if (health <= 0) {
+			FindObjectOfType<QuestManager>().nextPhase();
 			Destroy(gameObject);
 		}
 
@@ -57,7 +58,7 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 	IEnumerator shootProjectile (float seconds){
 		while (true) {
 			if (health > fullHealth/2){
-				yield return new WaitForSeconds (1.5f);
+				yield return new WaitForSeconds (1.7f);
 				GameObject p1 = (GameObject)Instantiate (projectile, this.transform.position, target.transform.rotation);
 				p1.GetComponent<ProjectileController>().suunta = (transform.position - target.transform.position).normalized;
 				attack.Play();

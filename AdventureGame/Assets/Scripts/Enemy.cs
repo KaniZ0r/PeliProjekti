@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour {
 			anim.SetFloat ("X", x);
 			anim.SetFloat ("Y", y);
 
-			if (dist < 1.5) {
+			if (dist < 5) {
 				seen = true;
 			}
 			if (seen) {
