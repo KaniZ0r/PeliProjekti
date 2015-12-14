@@ -13,7 +13,9 @@ public class PlayerController : MonoBehaviour {
 	AudioSource hurt;
 	AudioSource sword;
 
-	public GameObject DashIndicator;
+	public Scrollbar DashIndicator;
+	float fullDashBar;
+	float dashBar;
 
 	public int currentXp;
 	public bool immune;
@@ -54,13 +56,16 @@ public class PlayerController : MonoBehaviour {
 		dashSound = sources [0];
 		hurt = sources [1];
 		sword = sources [2];
+		fullDashBar = 1;
+		dashBar = fullDashBar;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		anim.SetBool ("die", false);
 		anim.SetBool ("isAttacking", false);
 		movementVector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
+		DashIndicator.size = dashBar / fullDashBar;
 
 		if (immune) {
 			if (immuneDur < 1) {
@@ -76,7 +81,6 @@ public class PlayerController : MonoBehaviour {
 			FindObjectOfType<Enemy>().target = null;
 			Freeze();
 			anim.SetBool("die", true);
-			gameObject.SetActive(false);
 		}
 		if (!stopper) {
 			if (movementVector != Vector2.zero) {
@@ -91,11 +95,10 @@ public class PlayerController : MonoBehaviour {
 				anim.SetFloat("Y", face_Y);
 			}
 			if (dashTimer < 1) {
-				DashIndicator.SetActive(false);
+				dashBar += Time.deltaTime;
 				dashTimer += Time.deltaTime;
 			}
 			if (dashTimer >= 1){
-				DashIndicator.SetActive(true);
 				if (Input.GetKeyDown (KeyCode.Q)) {
 					dash = true;
 				}
@@ -104,6 +107,7 @@ public class PlayerController : MonoBehaviour {
 			if (!knock) {
 				if (dash) {
 					dashSound.Play();
+					dashBar = 0;
 					if (knockdur > timer) {
 						rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * dashSpeed);
 						timer += Time.deltaTime;

@@ -23,7 +23,7 @@ public class Quest_npc1 : MonoBehaviour {
 		if (textbox.activeSelf) {
 				switch (textPhase) {
 				case 0:
-				FindObjectOfType<ImageScript> ().SetImage (head_grill);
+				FindObjectOfType<ImageScript> ().SetImage (head_player);
 					if (phase != 3){
 						FindObjectOfType<TextScript> ().SetText("Hey stranger! Could you please help me? I've lost my dog Nami.\n\n\n\nPress Space to continue.");
 					} else {

@@ -8,9 +8,13 @@ public class CameraController : MonoBehaviour {
 	public GameObject death;
 	public Transform checkpoint;
 	ScreenFader sf;
+	bool deathBool;
+	bool aliveBool;
 
 	void Start(){
 		sf = GameObject.FindGameObjectWithTag ("Fader").GetComponent<ScreenFader> ();
+		deathBool = false;
+		aliveBool = true;
 	}
 	// Update is called once per frame
 	void Update () {
@@ -19,23 +23,38 @@ public class CameraController : MonoBehaviour {
 			transform.position = Vector3.Lerp (transform.position, target.position, 0.1f) + new Vector3 (0, 0, -10);
 		}
 
-		if (!player) {
-			StartCoroutine(Death ());
+		if (player.GetComponent<PlayerController>().currentHP <= 0) {
+			if (aliveBool){
+				deathBool = true;
+				aliveBool = false;
+			}
+			if (deathBool){
+				StartCoroutine(Death ());
+			}
 			if (Input.GetKey (KeyCode.Space)){
-				StartCoroutine(Alive ());
+				aliveBool = false;
+				if (!aliveBool){
+					StartCoroutine(Alive ());
+				}
 			}
 		}
 	}
 
 	IEnumerator Death(){
+		deathBool = false;
+		yield return StartCoroutine(sf.FadeToBlack ());
 		death.SetActive (true);
-		yield return new WaitForSeconds (0);
+		yield return StartCoroutine(sf.FadeToClear ());
+
 	}
 
 	IEnumerator Alive(){
-		death.SetActive (false);
 		player.GetComponent<PlayerController> ().currentHP = player.GetComponent<PlayerController> ().maxHP;
-		player.SetActive (true);
-		yield return new WaitForSeconds (0);
+		aliveBool = true;
+		target.transform.position = checkpoint.transform.position;
+		yield return StartCoroutine(sf.FadeToBlack ());
+		death.SetActive (false);
+		yield return StartCoroutine(sf.FadeToClear ());
+		FindObjectOfType<HealthSystem> ().Restart ();
 	}
 }
