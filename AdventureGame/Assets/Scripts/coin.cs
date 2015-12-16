@@ -8,6 +8,7 @@ public class coin : MonoBehaviour {
 	float timer;
 	Animator anim;
 	int aliveTimer;
+	public bool still;
 
 	void Start () {
 		coinObject = GameObject.FindGameObjectWithTag ("CoinTag");
@@ -18,16 +19,18 @@ public class coin : MonoBehaviour {
 	}
 
 	void Update () {
-		transform.position = Vector3.MoveTowards (transform.position, target, 0.05f);
+		if (!still) {
+			transform.position = Vector3.MoveTowards (transform.position, target, 0.05f);
 
-		if (timer < aliveTimer) {
-			timer += Time.deltaTime;
+			if (timer < aliveTimer) {
+				timer += Time.deltaTime;
 
-		} else if (timer < aliveTimer * 2) {
-			timer += Time.deltaTime;
-			anim.SetBool ("death", true);
-		} else {
-			Destroy (gameObject);
+			} else if (timer < aliveTimer * 2) {
+				timer += Time.deltaTime;
+				anim.SetBool ("death", true);
+			} else {
+				Destroy (gameObject);
+			}
 		}
 	}
 

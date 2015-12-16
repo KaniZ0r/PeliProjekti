@@ -6,10 +6,14 @@ public class HealthSystem : MonoBehaviour {
 	public GameObject hp1;
 	public GameObject hp2;
 	public GameObject hp3;
+	public GameObject hp4;
+	public GameObject hp5;
 
 	public void Restart () {
 		hp1.SetActive (true);
 		hp2.SetActive (true);
 		hp3.SetActive (true);
+		hp4.SetActive (true);
+		hp5.SetActive (true);
 	}
 }

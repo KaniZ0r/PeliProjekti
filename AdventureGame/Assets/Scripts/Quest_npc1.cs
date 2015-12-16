@@ -11,73 +11,99 @@ public class Quest_npc1 : MonoBehaviour {
 	public int textPhase;
 	public Transform warpTarget;
 	Transform player;
+	bool active;
 
 	// Use this for initialization
 	void Start () {
 		QM = GameObject.FindWithTag ("QuestManager");
 		textPhase = 0;
 		player = GameObject.FindWithTag ("Player").transform;
+		active = false;
 	}
 	
 	void Update () {
-		if (textbox.activeSelf) {
+		if (active) {
+			if (textbox.activeSelf) {
 				switch (textPhase) {
 				case 0:
-				FindObjectOfType<ImageScript> ().SetImage (head_player);
-					if (phase != 3){
-						FindObjectOfType<TextScript> ().SetText("Hey stranger! Could you please help me? I've lost my dog Nami.\n\n\n\nPress Space to continue.");
+					if (phase != 3) {
+						FindObjectOfType<ImageScript> ().SetImage (head_player);
+						FindObjectOfType<TextScript> ().SetText ("Hey! Can you help me.........\n\n\n\n\nPress Space to continue.");
 					} else {
-						FindObjectOfType<TextScript>().SetText ("Nami! Thank you so much for saving him!\n\n\n\nPress Space to continue.");
+						FindObjectOfType<ImageScript> ().SetImage (head_grill);
+						FindObjectOfType<TextScript> ().SetText ("Nami! Thank you so much for saving him!\n\n\n\n\nPress Space to continue.");
 					}
-					if (Input.GetKeyDown(KeyCode.Space)){
+					if (Input.GetKeyDown (KeyCode.Space)) {
 						textPhase++;
 					}
 					break;
 				case 1:
-				FindObjectOfType<ImageScript> ().SetImage (head_player);
+
 					if (phase != 3) {
-						FindObjectOfType<TextScript>().SetText ("Well.. I can help you find your dog but I need help myself. Do you know those guards up there? I need to get past them.\n\n\nPress Space to continue.");
+						FindObjectOfType<ImageScript> ().SetImage (head_grill);
+						FindObjectOfType<TextScript> ().SetText ("*crying*\nPlease help me..... my dog ran away. Could you retrieve it for me?\nI do not dare travel in these woods alone with all those fierce beasts lurking around.\nPress Space to continue.");
 					} else {
-						FindObjectOfType<TextScript>().SetText ("Okay, like i promised I will show you the way around the guards. Let's go!\n\n\n\nPress Space to continue.");
+						FindObjectOfType<ImageScript> ().SetImage (head_player);
+						FindObjectOfType<TextScript> ().SetText ("Sure but do not forget our agreement.\n\n\n\n\nPress Space to continue.");
 					}
-					if (Input.GetKeyDown(KeyCode.Space)){
+					if (Input.GetKeyDown (KeyCode.Space)) {
 						textPhase++;
 					}
 					break;
 				case 2:
 					if (phase != 3) {
-						FindObjectOfType<ImageScript> ().SetImage (head_grill);
-						FindObjectOfType<TextScript>().SetText ("I know how to get past those guards! If you find my dog Nami, I will show you the way.\n\n\n\nPress Space to continue.");
+						FindObjectOfType<ImageScript> ().SetImage (head_player);
+						FindObjectOfType<TextScript> ().SetText ("Sure, but you owe me a favour in return!\n\n\n\n\nPress Space to continue.");
 					} else {
-					FindObjectOfType<TextScript>().SetText("Okay, like i promised I will show you the way around the guards. Let's go!\n\n\n\nPress Space to continue.");
+						FindObjectOfType<ImageScript> ().SetImage (head_grill);
+						FindObjectOfType<TextScript> ().SetText ("Yes ofcourse!\nBurger Börder Spurdolum\n\n\n\nPress Space to continue.");
 					}
-					if (Input.GetKeyDown(KeyCode.Space)){
+					if (Input.GetKeyDown (KeyCode.Space)) {
 						textPhase++;
 					}
 					break;
 				case 3:
 					if (phase != 3) {
-						textbox.SetActive(false);
-						FindObjectOfType<PlayerController>().UnFreeze();
-						FindObjectOfType<QuestManager>().nextPhase();
-						textPhase++;
+						FindObjectOfType<ImageScript> ().SetImage (head_grill);
+						FindObjectOfType<TextScript> ().SetText ("I could show you a route past northern guards!\n\n\n\n\nPress Space to continue.");
 					} else {
-						StartCoroutine(Teleport());
+						StartCoroutine (Teleport ());
+					}
+					if (Input.GetKeyDown (KeyCode.Space)) {
+						textPhase++;
+					}
+					break;
+				case 4:
+					if (phase != 3) {
+						FindObjectOfType<ImageScript>().SetImage(head_player);
+						FindObjectOfType<TextScript>().SetText("Deal!\n\n\n\n\nPress Space to continue.");
+					} else {
+						FindObjectOfType<ImageScript> ().SetImage (head_grill);
+						FindObjectOfType<TextScript> ().SetText ("YOU SHOULDN'T BE HERE!\n\n\n\nPress Space to continue.");
+					}
+					if (Input.GetKeyDown (KeyCode.Space)) {
+						QM.GetComponent<QuestManager>().nextPhase();
+						textbox.SetActive(false);
+						textPhase++;
+						FindObjectOfType<PlayerController>().UnFreeze();
 					}
 					break;
 				default:
-					FindObjectOfType<TextScript>().SetText ("Have you found Nami yet? I'm so worried.\n\n\n\n\n\nPress Space to continue.");
-					if (Input.GetKeyDown(KeyCode.Space)){
-						textbox.SetActive(false);
-						FindObjectOfType<PlayerController>().UnFreeze();
+					FindObjectOfType<ImageScript> ().SetImage (head_grill);
+					FindObjectOfType<TextScript> ().SetText ("Have you found Nami yet? I'm so worried.\n\n\n\n\n\nPress Space to continue.");
+					if (Input.GetKeyDown (KeyCode.Space)) {
+						textbox.SetActive (false);
+						FindObjectOfType<PlayerController> ().UnFreeze ();
 					}
 					break;
+				}
 			}
 		}
 	}
 
 	void OnTriggerEnter2D (Collider2D other){
 		if (other.tag == "Player") {
+			active = true;
 			textbox.SetActive(true);
 			FindObjectOfType<PlayerController> ().Freeze ();
 			phase = QM.GetComponent<QuestManager> ().phase;

@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour {
 	public GameObject player;
 	public GameObject death;
 	public Transform checkpoint;
+	public GameObject bossManager;
 	ScreenFader sf;
 	bool deathBool;
 	bool aliveBool;
@@ -22,8 +23,10 @@ public class CameraController : MonoBehaviour {
 		if (target) {
 			transform.position = Vector3.Lerp (transform.position, target.position, 0.1f) + new Vector3 (0, 0, -10);
 		}
-
 		if (player.GetComponent<PlayerController>().currentHP <= 0) {
+			if (bossManager.activeSelf){
+				bossManager.GetComponent<BossManager>().playerDie();
+			}
 			if (aliveBool){
 				deathBool = true;
 				aliveBool = false;
@@ -50,7 +53,9 @@ public class CameraController : MonoBehaviour {
 
 	IEnumerator Alive(){
 		player.GetComponent<PlayerController> ().currentHP = player.GetComponent<PlayerController> ().maxHP;
+		player.GetComponent<Animator> ().SetBool ("die", false);
 		aliveBool = true;
+		target = player.transform;
 		target.transform.position = checkpoint.transform.position;
 		yield return StartCoroutine(sf.FadeToBlack ());
 		death.SetActive (false);

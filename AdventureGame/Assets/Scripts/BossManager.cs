@@ -15,16 +15,18 @@ public class BossManager : MonoBehaviour {
 	bool battle;
 
 	void Start () {
+		battle = false;
 	}
 
 	void Update () {
 		if (battle) {
 			health = FindObjectOfType<Boss_ManEaterFlower> ().health;
 			hpBar.size = health / fullHealth;
-			if (health == 0){
-				StartCoroutine(endBattle());
-			}
 		}
+	}
+
+	public void endBattle1 () {
+		StartCoroutine (endBattle ());
 	}
 
 	IEnumerator OnTriggerEnter2D (Collider2D other){
@@ -37,10 +39,11 @@ public class BossManager : MonoBehaviour {
 			other.gameObject.transform.position = warpTarget.position;
 			FindObjectOfType<CameraController>().target = GameObject.FindWithTag ("Boss").transform;
 			Camera.main.orthographicSize = 2.5f;
+			boss.GetComponent<Boss_ManEaterFlower>().resetHP();
 			hp.SetActive(true);
 			yield return StartCoroutine (sf.FadeToClear ());
 			FindObjectOfType<Boss_ManEaterFlower>().setStart();
-			fullHealth = FindObjectOfType<Boss_ManEaterFlower> ().health;
+			fullHealth = FindObjectOfType<Boss_ManEaterFlower> ().startHealth;
 			bossTitle.SetActive(false);
 			borders.SetActive(true);
 			battle = true;
@@ -48,6 +51,8 @@ public class BossManager : MonoBehaviour {
 	}
 
 	IEnumerator endBattle () {
+		battle = false;
+		FindObjectOfType<QuestManager> ().nextPhase ();
 		FindObjectOfType<CameraController> ().target = GameObject.FindWithTag ("Player").transform;
 		hp.SetActive (false);
 		Destroy (gameObject);
@@ -55,4 +60,10 @@ public class BossManager : MonoBehaviour {
 		yield return new WaitForFixedUpdate();
 	}
 
+	public void playerDie () {
+		boss.SetActive (false);
+		borders.SetActive (false);
+		hp.SetActive (false);
+		Camera.main.orthographicSize = 2f;
+	}
 }

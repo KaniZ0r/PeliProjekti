@@ -9,16 +9,18 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 	float x;
 	float y;
 	public int health;
+	public int startHealth;
 	int fullHealth;
 	bool start;
 	AudioSource attack;
 	AudioSource hurt;
 
 	void Start () {
+		fullHealth = startHealth;
+		health = fullHealth;
 		anim = GetComponent<Animator> ();
 		target = GameObject.FindWithTag ("Player").transform;
 		start = false;
-		fullHealth = health;
 		var sources = GetComponents<AudioSource> ();
 		attack = sources [0];
 		hurt = sources [1];
@@ -33,12 +35,12 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 		anim.SetFloat ("Y", y);		
 
 		if (health <= 0) {
-			FindObjectOfType<QuestManager>().nextPhase();
+			FindObjectOfType<BossManager>().endBattle1();
 			Destroy(gameObject);
 		}
 
 		if (start) {
-			StartCoroutine (shootProjectile (3f));
+			StartCoroutine (shootProjectile (4f));
 			start = false;
 		}
 	}
@@ -53,6 +55,10 @@ public class Boss_ManEaterFlower : MonoBehaviour {
 
 	public void setStart (){
 		start = true;
+	}
+
+	public void resetHP(){
+		health = fullHealth;
 	}
 
 	IEnumerator shootProjectile (float seconds){

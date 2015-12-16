@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour {
 	public int knockSpeed;
 
 	public bool dash;
+	bool dashSoundq;
 	public int dashSpeed;
 	float dashTimer;
 	Vector2 movementVector;
@@ -61,6 +62,7 @@ public class PlayerController : MonoBehaviour {
 		fullDashBar = 1;
 		dashBar = fullDashBar;
 		coins = 0;
+		dashSoundq = true;
 	}
 	
 	// Update is called once per frame
@@ -70,20 +72,18 @@ public class PlayerController : MonoBehaviour {
 		movementVector = new Vector2 (Input.GetAxisRaw ("Horizontal"), Input.GetAxisRaw ("Vertical"));
 		DashIndicator.size = dashBar / fullDashBar;
 
-		if (immune) {
-			if (immuneDur < 1) {
-				immuneDur += Time.deltaTime;
-			} else {
-				immune = false;
-			}
-		} else {
-			immuneDur = 0;
-		}
-
 		if (currentHP <= 0) {
-			FindObjectOfType<Enemy>().target = null;
-			Freeze();
-			anim.SetBool("die", true);
+			anim.SetBool ("die", true);
+		} else {
+			if (immune) {
+				if (immuneDur < 1) {
+					immuneDur += Time.deltaTime;
+				} else {
+					immune = false;
+				}
+			} else {
+				immuneDur = 0;
+			}
 		}
 		if (!stopper) {
 			if (movementVector != Vector2.zero) {
@@ -104,12 +104,16 @@ public class PlayerController : MonoBehaviour {
 			if (dashTimer >= 1){
 				if (Input.GetKeyDown (KeyCode.Q)) {
 					dash = true;
+					dashSoundq = true;
 				}
 			}
 
 			if (!knock) {
 				if (dash) {
-					dashSound.Play();
+					if (dashSoundq){
+						dashSound.Play();
+						dashSoundq = false;
+					}
 					dashBar = 0;
 					if (knockdur > timer) {
 						rb2d.MovePosition (rb2d.position + movementVector * Time.deltaTime * dashSpeed);
