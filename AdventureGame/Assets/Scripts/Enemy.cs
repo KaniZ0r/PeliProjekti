@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour {
 	public float moveSpeed;
 	public int enemyHealth;
 	float dist;
-	
+
+	public GameObject coin;
 	public float knockdur;
 	float timer;
 	bool knock;
@@ -27,6 +28,9 @@ public class Enemy : MonoBehaviour {
 	void Update () {
 
 		if (enemyHealth == 0) {
+			for (int i = 0; i < Random.Range (2, 5); i++){
+				Instantiate (coin, transform.position, Quaternion.identity);
+			}
 			Destroy(gameObject);
 		}
 

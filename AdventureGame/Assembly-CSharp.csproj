@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\TextScript.cs" />
      <Compile Include="Assets\Scripts\Warp.cs" />
      <Compile Include="Assets\Scripts\XP_Point.cs" />
+     <Compile Include="Assets\Scripts\coin.cs" />
      <Compile Include="Assets\Scripts\npc_script.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\SortingLayerExposed.cs" />
      <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\TileAnimator.cs" />

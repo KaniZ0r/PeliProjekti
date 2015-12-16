@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour {
 	Vector2 movementVector;
 	bool takeD;
 
+	public int coins;
+
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour {
 		sword = sources [2];
 		fullDashBar = 1;
 		dashBar = fullDashBar;
+		coins = 0;
 	}
 	
 	// Update is called once per frame
@@ -175,5 +178,9 @@ public class PlayerController : MonoBehaviour {
 			xK = x;
 			yK = y;
 		}
+	}
+
+	public void addCoins (){
+		coins++;
 	}
 }
