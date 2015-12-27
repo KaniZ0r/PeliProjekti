@@ -19,7 +19,7 @@ public class coin : MonoBehaviour {
 		timer = 0;
 		movingTimer2 = 0;
 		movingTimer = 0.2f;
-		aliveTimer = 2;
+		aliveTimer = 3;
 		anim = GetComponent<Animator> ();
 		moving = true;
 	}

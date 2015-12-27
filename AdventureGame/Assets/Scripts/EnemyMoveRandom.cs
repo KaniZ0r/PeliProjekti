@@ -9,6 +9,8 @@ public class EnemyMoveRandom : MonoBehaviour {
 	public float moveSpeed;
 	AudioSource hurt;
 	AudioSource move;
+	public float dist;
+	bool seen;
 	
 	public GameObject coin;
 	public float knockdur;
@@ -30,36 +32,64 @@ public class EnemyMoveRandom : MonoBehaviour {
 	Vector3 moveDirection;
 
 	void Start () {
-		var sources = GetComponents<AudioSource> ();
-		hurt = sources [0];
-		move = sources [1];
+		//var sources = GetComponents<AudioSource> ();
+		//hurt = sources [0];
+		//move = sources [1];
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
 		knock = false;
 		moving = true;
 		moveTime = 0;
 		waitTime = 0;
-		moveSound = true;
+		seen = false;
+		//moveSound = true;
 		moveTimeCounter = Random.Range (movingTime * 0.20f, movingTime * 0.35f);
 		waitTimeCounter = Random.Range (movingTime * 1f, movingTime * 1.5f);
-		moveDirection = new Vector3 (Random.Range (-1f, 1f)  * moveSpeed, Random.Range (-1f, 1f) * moveSpeed);
+		moveDirection = new Vector3 (Random.Range (-0.5f, 0.5f)  * moveSpeed, Random.Range (-0.5f, 0.5f) * moveSpeed);
 	}
 	
 	void Update () {
-		
-		if (enemyHealth == 0) {
-			for (int i = 0; i < Random.Range (2, 5); i++){
-				Instantiate (coin, transform.position, Quaternion.identity);
+
+		if (target) {
+			dist = Vector3.Distance(transform.position, target.transform.position);
+			x = target.transform.position.x - transform.position.x;
+			y = target.transform.position.y - transform.position.y;
+			
+			anim.SetFloat ("X", x);
+			anim.SetFloat ("Y", y);
+			
+			if (dist < 1.5f) {
+				seen = true;
 			}
-			Destroy(gameObject);
+
+			// --- aggro ---
+			if (seen) {
+				if (!knock) {
+					rb2d.velocity = Vector2.zero;
+					transform.position += (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime;
+				} else {
+					if (knockdur > timer) {
+						transform.position -= (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime * 6;
+						timer += Time.deltaTime;
+						anim.SetTrigger("hurt");
+					} else {
+						timer = 0;
+						knock = false;
+					}
+				}
+			}
+		} else {
+			target = null;
 		}
-		if (!knock) {
+
+		// --- random liikkuminen ---
+		if (!seen) {
 			if (moving){
-				if (moveSound)
+				/*if (moveSound)
 				{
 					move.Play();
 					moveSound = false;
-				}
+				}*/
 				rb2d.velocity = moveDirection;
 				moveTime += Time.deltaTime;
 				if (moveTime >= moveTimeCounter){
@@ -79,22 +109,16 @@ public class EnemyMoveRandom : MonoBehaviour {
 					moveSound = true;
 				}
 			}
+		}
 
-		} else {
-			if (knockdur > timer) {
-				rb2d.velocity = -(target.transform.position - transform.position).normalized * Time.deltaTime * 200;
-				timer += Time.deltaTime;
-				anim.SetTrigger ("hurt");
-			} else {
-				timer = 0;
-				moveTimeCounter = Random.Range (movingTime * 0.75f, movingTime * 1.25f);
-				moveTime = 0;
-				moving = true;
-				moveSound = true;
-				knock = false;
+		if (enemyHealth == 0) {
+			for (int i = 0; i < Random.Range (2, 4); i++){
+				Instantiate (coin, transform.position, Quaternion.identity);
 			}
+			Destroy(gameObject);
 		}
 	}
+
 	
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player") {
@@ -103,7 +127,7 @@ public class EnemyMoveRandom : MonoBehaviour {
 		}
 		
 		if (other.tag == "Weapon") {
-			hurt.Play();
+			//hurt.Play();
 			knock = true;
 			enemyHealth--;
 		}
