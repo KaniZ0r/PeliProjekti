@@ -11,11 +11,17 @@ public class CameraController : MonoBehaviour {
 	ScreenFader sf;
 	bool deathBool;
 	bool aliveBool;
+	public AudioSource mainSong;
+	public AudioSource bossSong;
+
 
 	void Start(){
 		sf = GameObject.FindGameObjectWithTag ("Fader").GetComponent<ScreenFader> ();
 		deathBool = false;
 		aliveBool = true;
+		var sources = GetComponents<AudioSource> ();
+		mainSong = sources [0];
+		bossSong = sources [1];
 	}
 	// Update is called once per frame
 	void Update () {
@@ -58,8 +64,10 @@ public class CameraController : MonoBehaviour {
 		target = player.transform;
 		target.transform.position = checkpoint.transform.position;
 		yield return StartCoroutine(sf.FadeToBlack ());
+		target.transform.position = checkpoint.transform.position;
 		death.SetActive (false);
 		yield return StartCoroutine(sf.FadeToClear ());
+		target.transform.position = checkpoint.transform.position;
 		FindObjectOfType<HealthSystem> ().Restart ();
 	}
 }

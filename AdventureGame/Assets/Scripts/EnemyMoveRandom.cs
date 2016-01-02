@@ -11,15 +11,14 @@ public class EnemyMoveRandom : MonoBehaviour {
 	AudioSource move;
 	public float dist;
 	bool seen;
-	
+	float x;
+	float y;
+
+	public GameObject heart;
 	public GameObject coin;
 	public float knockdur;
 	float timer;
 	bool knock;
-	
-	float x;
-	float y;
-
 	public float movingTime;
 	float moveTime;
 	float waitTime;
@@ -45,24 +44,33 @@ public class EnemyMoveRandom : MonoBehaviour {
 		//moveSound = true;
 		moveTimeCounter = Random.Range (movingTime * 0.20f, movingTime * 0.35f);
 		waitTimeCounter = Random.Range (movingTime * 1f, movingTime * 1.5f);
-		moveDirection = new Vector3 (Random.Range (-0.5f, 0.5f)  * moveSpeed, Random.Range (-0.5f, 0.5f) * moveSpeed);
+		x = Random.Range (-1f, 1f);
+		y = Random.Range (-1f, 1f);
+		moveDirection = new Vector3 (x / 2  * moveSpeed, y / 2 * moveSpeed);
 	}
 	
 	void Update () {
 
 		if (target) {
-			dist = Vector3.Distance(transform.position, target.transform.position);
-			x = target.transform.position.x - transform.position.x;
-			y = target.transform.position.y - transform.position.y;
+			dist = Vector3.Distance (transform.position, target.transform.position);
 			
 			anim.SetFloat ("X", x);
 			anim.SetFloat ("Y", y);
 			
 			if (dist < 1.5f) {
 				seen = true;
+				x = target.transform.position.x - transform.position.x;
+				y = target.transform.position.y - transform.position.y;
+			} else {
+				seen = false;
+			}
+
+			if (seen) {
+				moveDirection = (target.transform.position - transform.position).normalized * 3 / 4;
 			}
 
 			// --- aggro ---
+			/**
 			if (seen) {
 				if (!knock) {
 					rb2d.velocity = Vector2.zero;
@@ -81,41 +89,69 @@ public class EnemyMoveRandom : MonoBehaviour {
 		} else {
 			target = null;
 		}
+		**/
 
-		// --- random liikkuminen ---
-		if (!seen) {
-			if (moving){
+			// --- random liikkuminen ---
+			if (moving) {
 				/*if (moveSound)
 				{
 					move.Play();
 					moveSound = false;
 				}*/
-				rb2d.velocity = moveDirection;
-				moveTime += Time.deltaTime;
-				if (moveTime >= moveTimeCounter){
+				if (!knock) {
+					rb2d.velocity = moveDirection;
+					moveTime += Time.deltaTime;
+				} else {
+					if (knockdur > timer) {
+						transform.position -= (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime * 6;
+						timer += Time.deltaTime;
+						anim.SetTrigger("hurt");
+					} else {
+						timer = 0;
+						moveTime = moveTimeCounter;
+						knock = false;
+					}
+				}
+				if (moveTime >= moveTimeCounter) {
 					waitTimeCounter = Random.Range (movingTime * 0.75f, movingTime * 1.25f);
 					waitTime = 0;
 					moving = false;
 				}
 			} else {
-				rb2d.velocity = Vector2.zero;
-				waitTime += Time.deltaTime;
-				if (waitTime >= waitTimeCounter)
-				{
-					moveDirection = new Vector3 (Random.Range (-1f, 1f) * moveSpeed, Random.Range (-1f, 1f) * moveSpeed);
+				if (!knock) {
+					rb2d.velocity = Vector2.zero;
+					waitTime += Time.deltaTime;
+				} else {
+					if (knockdur > timer) {
+						transform.position -= (target.transform.position - transform.position).normalized * moveSpeed * Time.deltaTime * 6;
+						timer += Time.deltaTime;
+						anim.SetTrigger("hurt");
+					} else {
+						timer = 0;
+						waitTime = waitTimeCounter;
+						knock = false;
+					}
+				}
+				if (waitTime >= waitTimeCounter) {
+					x = Random.Range (-1f, 1f);
+					y = Random.Range (-1f, 1f);
+					moveDirection = new Vector3 (x / 2  * moveSpeed, y / 2 * moveSpeed);
 					moveTimeCounter = Random.Range (movingTime * 0.75f, movingTime * 1.25f);
 					moveTime = 0;
 					moving = true;
 					moveSound = true;
 				}
 			}
-		}
 
-		if (enemyHealth == 0) {
-			for (int i = 0; i < Random.Range (2, 4); i++){
-				Instantiate (coin, transform.position, Quaternion.identity);
+			if (enemyHealth == 0) {
+				if (Random.Range(0, 6) > 4) {
+					Instantiate (heart, transform.position, Quaternion.identity);
+				}
+				for (int i = 0; i < Random.Range (2, 4); i++) {
+					Instantiate (coin, transform.position, Quaternion.identity);
+				}
+				Destroy (gameObject);
 			}
-			Destroy(gameObject);
 		}
 	}
 

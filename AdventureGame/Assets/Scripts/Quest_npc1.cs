@@ -27,11 +27,11 @@ public class Quest_npc1 : MonoBehaviour {
 				switch (textPhase) {
 				case 0:
 					if (phase != 3) {
-						FindObjectOfType<ImageScript> ().SetImage (head_player);
-						FindObjectOfType<TextScript> ().SetText ("Hey! Can you help me.........\n\n\n\n\nPress Space to continue.");
+						textbox.GetComponentInChildren<ImageScript>().SetImage (head_player);
+						textbox.GetComponentInChildren<TextScript>().SetText ("Hey! Can you help me.........\n\n\n\n\nPress Space to continue.");
 					} else {
-						FindObjectOfType<ImageScript> ().SetImage (head_grill);
-						FindObjectOfType<TextScript> ().SetText ("Nami! Thank you so much for saving him!\n\n\n\n\nPress Space to continue.");
+						textbox.GetComponentInChildren<ImageScript>().SetImage (head_grill);
+						textbox.GetComponentInChildren<TextScript>().SetText ("Nami! Thank you so much for saving him!\n\n\n\n\nPress Space to continue.");
 					}
 					if (Input.GetKeyDown (KeyCode.Space)) {
 						textPhase++;
@@ -40,11 +40,11 @@ public class Quest_npc1 : MonoBehaviour {
 				case 1:
 
 					if (phase != 3) {
-						FindObjectOfType<ImageScript> ().SetImage (head_grill);
-						FindObjectOfType<TextScript> ().SetText ("*crying*\nPlease help me..... my dog ran away. Could you retrieve it for me?\nI do not dare travel in these woods alone with all those fierce beasts lurking around.\nPress Space to continue.");
+						textbox.GetComponentInChildren<ImageScript>().SetImage (head_grill);
+						textbox.GetComponentInChildren<TextScript>().SetText ("*crying*\nPlease help me..... my dog ran away. Could you retrieve it for me?\nI do not dare travel in these woods alone with all those fierce beasts lurking around.\nPress Space to continue.");
 					} else {
-						FindObjectOfType<ImageScript> ().SetImage (head_player);
-						FindObjectOfType<TextScript> ().SetText ("Sure but do not forget our agreement.\n\n\n\n\nPress Space to continue.");
+						textbox.GetComponentInChildren<ImageScript>().SetImage (head_player);
+						textbox.GetComponentInChildren<TextScript>().SetText ("Sure but do not forget our agreement.\n\n\n\n\nPress Space to continue.");
 					}
 					if (Input.GetKeyDown (KeyCode.Space)) {
 						textPhase++;
@@ -52,11 +52,11 @@ public class Quest_npc1 : MonoBehaviour {
 					break;
 				case 2:
 					if (phase != 3) {
-						FindObjectOfType<ImageScript> ().SetImage (head_player);
-						FindObjectOfType<TextScript> ().SetText ("Sure, but you owe me a favour in return!\n\n\n\n\nPress Space to continue.");
+						textbox.GetComponentInChildren<ImageScript>().SetImage (head_player);
+						textbox.GetComponentInChildren<TextScript>().SetText ("Sure, but you owe me a favour in return!\n\n\n\n\nPress Space to continue.");
 					} else {
-						FindObjectOfType<ImageScript> ().SetImage (head_grill);
-						FindObjectOfType<TextScript> ().SetText ("Yes ofcourse!\nBurger Börder Spurdolum\n\n\n\nPress Space to continue.");
+						textbox.GetComponentInChildren<ImageScript>().SetImage (head_grill);
+						textbox.GetComponentInChildren<TextScript>().SetText ("Yes ofcourse!\nBurger Börder Spurdolum\n\n\n\nPress Space to continue.");
 					}
 					if (Input.GetKeyDown (KeyCode.Space)) {
 						textPhase++;
@@ -64,8 +64,8 @@ public class Quest_npc1 : MonoBehaviour {
 					break;
 				case 3:
 					if (phase != 3) {
-						FindObjectOfType<ImageScript> ().SetImage (head_grill);
-						FindObjectOfType<TextScript> ().SetText ("I could show you a route past northern guards!\n\n\n\n\nPress Space to continue.");
+						textbox.GetComponentInChildren<ImageScript>().SetImage (head_grill);
+						textbox.GetComponentInChildren<TextScript>().SetText ("I could show you a route past northern guards!\n\n\n\n\nPress Space to continue.");
 					} else {
 						StartCoroutine (Teleport ());
 					}
@@ -75,11 +75,11 @@ public class Quest_npc1 : MonoBehaviour {
 					break;
 				case 4:
 					if (phase != 3) {
-						FindObjectOfType<ImageScript>().SetImage(head_player);
-						FindObjectOfType<TextScript>().SetText("Deal!\n\n\n\n\nPress Space to continue.");
+						textbox.GetComponentInChildren<ImageScript>().SetImage(head_player);
+						textbox.GetComponentInChildren<TextScript>().SetText("Deal!\n\n\n\n\nPress Space to continue.");
 					} else {
-						FindObjectOfType<ImageScript> ().SetImage (head_grill);
-						FindObjectOfType<TextScript> ().SetText ("YOU SHOULDN'T BE HERE!\n\n\n\nPress Space to continue.");
+						textbox.GetComponentInChildren<ImageScript>().SetImage (head_grill);
+						textbox.GetComponentInChildren<TextScript>().SetText ("YOU SHOULDN'T BE HERE!\n\n\n\nPress Space to continue.");
 					}
 					if (Input.GetKeyDown (KeyCode.Space)) {
 						QM.GetComponent<QuestManager>().nextPhase();
@@ -89,8 +89,8 @@ public class Quest_npc1 : MonoBehaviour {
 					}
 					break;
 				default:
-					FindObjectOfType<ImageScript> ().SetImage (head_grill);
-					FindObjectOfType<TextScript> ().SetText ("Have you found Nami yet? I'm so worried.\n\n\n\n\n\nPress Space to continue.");
+					textbox.GetComponentInChildren<ImageScript>().SetImage (head_grill);
+					textbox.GetComponentInChildren<TextScript>().SetText ("Have you found Nami yet? I'm so worried.\n\n\n\n\n\nPress Space to continue.");
 					if (Input.GetKeyDown (KeyCode.Space)) {
 						textbox.SetActive (false);
 						FindObjectOfType<PlayerController> ().UnFreeze ();

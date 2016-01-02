@@ -163,6 +163,7 @@ public class PlayerController : MonoBehaviour {
 	public void Freeze () {
 		anim.SetBool ("isWalking", false);
 		stopper = true;
+		rb2d.velocity = Vector2.zero;
 	}
 
 	public void UnFreeze () {
@@ -174,6 +175,10 @@ public class PlayerController : MonoBehaviour {
 			takeD = true;
 			currentHP--;
 		}
+	}
+
+	public void addHP () {
+		currentHP++;
 	}
 
 	public void knockBack (float x, float y) {

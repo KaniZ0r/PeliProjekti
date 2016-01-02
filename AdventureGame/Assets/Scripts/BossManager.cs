@@ -31,6 +31,8 @@ public class BossManager : MonoBehaviour {
 
 	IEnumerator OnTriggerEnter2D (Collider2D other){
 		if (other.tag == "Player") {
+			FindObjectOfType<CameraController>().mainSong.Stop();
+			FindObjectOfType<CameraController>().bossSong.Play();
 			ScreenFader sf = GameObject.FindGameObjectWithTag ("Fader").GetComponent<ScreenFader> ();
 			FindObjectOfType<PlayerController> ().Freeze ();
 			bossTitle.SetActive(true);
@@ -51,6 +53,8 @@ public class BossManager : MonoBehaviour {
 	}
 
 	IEnumerator endBattle () {
+		FindObjectOfType<CameraController>().bossSong.Stop();
+		FindObjectOfType<CameraController>().mainSong.Play();
 		battle = false;
 		FindObjectOfType<QuestManager> ().nextPhase ();
 		FindObjectOfType<CameraController> ().target = GameObject.FindWithTag ("Player").transform;
@@ -61,6 +65,8 @@ public class BossManager : MonoBehaviour {
 	}
 
 	public void playerDie () {
+		FindObjectOfType<CameraController>().bossSong.Stop();
+		FindObjectOfType<CameraController>().mainSong.Play();
 		boss.SetActive (false);
 		borders.SetActive (false);
 		hp.SetActive (false);

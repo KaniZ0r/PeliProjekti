@@ -15,8 +15,8 @@ public class HealthManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().currentHP < heart) {
-			gameObject.SetActive(false);
+		if (GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerController> ().currentHP < heart) {
+			gameObject.SetActive (false);
 		}
 	}
 }
